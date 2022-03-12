@@ -347,11 +347,13 @@ export class CTCBeamSearch {
             beam.copy(row, row[this._blankIndex]),
             this._vocabulary);
         // then run through all labels for the extend() case
-        for(let cIndex = 0, len = row.length - 1; cIndex < len; cIndex++) {
+        for(let cIndex = 0, len = row.length; cIndex < len; cIndex++) {
           // extend cases
-          allCandidates.add(
-              beam.extend(cIndex, row[cIndex], row[this._blankIndex]),
-              this._vocabulary);
+          if (cIndex !== this._blankIndex) {
+            allCandidates.add(
+                beam.extend(cIndex, row[cIndex], row[this._blankIndex]),
+                this._vocabulary);
+          }
         }
       });
 
